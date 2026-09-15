@@ -5,216 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moolvy Labs</title>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- CSS Variables & Theming --- */
+        /* --- Theme tokens --- */
         :root {
-            --bg-color: #ffffff;
-            --header-bg: rgba(255, 255, 255, 0.8);
-            --text-main: #1a1a1a;
-            --text-muted: #666666;
-            --primary-blue: #2563eb;
-            --primary-hover: #1d4ed8;
-            --card-bg: #f8fafc;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --transition-speed: 0.3s;
+            --bg: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #111111;
+            --text-muted: #6b6b6b;
+            --accent: #3454d1;
+            --accent-hover: #2942a8;
+            --border: #e6e6e6;
+            --speed: 0.2s;
         }
 
         [data-theme="dark"] {
-            --bg-color: #0f172a;
-            --header-bg: rgba(15, 23, 42, 0.8);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --primary-blue: #3b82f6;
-            --primary-hover: #60a5fa;
-            --card-bg: #1e293b;
-            --border-color: #334155;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+            --bg: #0b0b0f;
+            --header-bg: rgba(11, 11, 15, 0.85);
+            --text-main: #f2f2f2;
+            --text-muted: #969696;
+            --accent: #6f8bf0;
+            --accent-hover: #8ea0f4;
+            --border: #262630;
         }
 
-        /* --- Reset & Base Styles --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            -webkit-text-size-adjust: 100%;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { -webkit-text-size-adjust: 100%; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--bg);
             color: var(--text-main);
-            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
             line-height: 1.6;
-            overflow-x: hidden;
+            transition: background-color var(--speed) ease, color var(--speed) ease;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: color var(--transition-speed) ease;
-        }
+        a { text-decoration: none; color: inherit; transition: color var(--speed) ease; }
+        ul { list-style: none; }
+        img, svg { max-width: 100%; display: block; }
 
-        ul {
-            list-style: none;
-        }
-
-        img, svg {
-            max-width: 100%;
-            display: block;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 
         /* --- Header --- */
         header {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+            top: 0; left: 0; width: 100%;
             z-index: 1000;
             background-color: var(--header-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
         }
 
         .header-inner {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 80px;
+            height: 72px;
         }
 
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--text-main);
+            gap: 10px;
+            font-weight: 600;
+            font-size: 1.15rem;
         }
 
-        .logo-img {
-            height: 40px;
-            width: auto;
-            object-fit: contain;
-        }
+        .logo-img { height: 30px; width: auto; object-fit: contain; }
 
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 24px;
-        }
+        nav { display: flex; align-items: center; gap: 28px; }
+        .nav-links { display: flex; gap: 28px; }
 
         .nav-link {
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            position: relative;
         }
 
-        .nav-link:hover {
-            color: var(--primary-blue);
-        }
+        .nav-link:hover { color: var(--text-main); }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary-blue);
-            transition: width var(--transition-speed) ease;
-        }
+        .header-controls { display: flex; align-items: center; gap: 8px; }
 
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .theme-toggle,
-        .lang-toggle {
+        .theme-toggle, .lang-toggle {
             background: none;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
             color: var(--text-main);
-            padding: 8px 12px;
-            border-radius: 8px;
+            padding: 7px 11px;
+            border-radius: 6px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
+            gap: 7px;
+            font-size: 0.85rem;
             font-weight: 500;
             font-family: inherit;
-            transition: all var(--transition-speed) ease;
+            transition: border-color var(--speed) ease, color var(--speed) ease;
         }
 
-        .theme-toggle:hover,
-        .lang-toggle:hover {
-            border-color: var(--primary-blue);
-            color: var(--primary-blue);
-        }
+        .theme-toggle:hover, .lang-toggle:hover { border-color: var(--text-muted); }
 
-        .theme-toggle .icon-sun,
-        .theme-toggle .icon-moon {
-            display: block;
-        }
         .theme-toggle .icon-moon { display: none; }
         [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
         [data-theme="dark"] .theme-toggle .icon-moon { display: block; }
 
-        /* Language toggle */
-        .lang-toggle {
-            gap: 4px;
-            padding: 8px 10px;
-        }
+        .lang-toggle { gap: 3px; padding: 7px 9px; }
+        .lang-toggle .lang-option { padding: 1px 5px; border-radius: 4px; color: var(--text-muted); }
+        .lang-toggle .lang-option.active { color: var(--bg); background-color: var(--text-main); }
+        .lang-toggle .lang-sep { color: var(--border); }
 
-        .lang-toggle .lang-option {
-            padding: 2px 6px;
-            border-radius: 5px;
-            color: var(--text-muted);
-            transition: all var(--transition-speed) ease;
-        }
-
-        .lang-toggle .lang-option.active {
-            color: #fff;
-            background-color: var(--primary-blue);
-        }
-
-        .lang-toggle .lang-sep {
-            color: var(--border-color);
-        }
-
-        /* Mobile Menu Toggle */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -229,188 +131,116 @@
         .mobile-menu-btn.open .icon-open { display: none; }
         .mobile-menu-btn.open .icon-close { display: block; }
 
-        /* Mobile dropdown panel */
         .mobile-nav-panel {
             display: none;
             flex-direction: column;
-            gap: 4px;
-            padding: 12px 20px 20px;
-            border-top: 1px solid var(--border-color);
-            background-color: var(--bg-color);
+            padding: 4px 24px 16px;
+            border-top: 1px solid var(--border);
+            background-color: var(--bg);
         }
 
-        .mobile-nav-panel.open {
-            display: flex;
-        }
+        .mobile-nav-panel.open { display: flex; }
 
         .mobile-nav-panel .nav-link {
-            padding: 12px 4px;
-            font-size: 1rem;
-            border-bottom: 1px solid var(--border-color);
+            padding: 14px 2px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--border);
         }
 
-        .mobile-nav-panel .nav-link:last-child {
-            border-bottom: none;
-        }
+        .mobile-nav-panel .nav-link:last-child { border-bottom: none; }
 
-        /* --- Hero Section --- */
+        /* --- Hero --- */
         .hero {
-            padding-top: 160px;
-            padding-bottom: 80px;
+            padding-top: 148px;
+            padding-bottom: 72px;
             text-align: center;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease forwards;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
+            font-size: 3rem;
+            font-weight: 700;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, var(--text-main) 0%, var(--primary-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 18px;
         }
 
         .hero p {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 40px;
+            max-width: 520px;
+            margin: 0 auto 36px;
         }
 
         .cta-button {
             display: inline-block;
-            background-color: var(--primary-blue);
-            color: white;
-            padding: 14px 32px;
-            border-radius: 50px;
+            background-color: var(--accent);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 6px;
             font-weight: 600;
-            font-size: 1rem;
-            box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+            font-size: 0.95rem;
+            transition: background-color var(--speed) ease;
         }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px 0 rgba(37, 99, 235, 0.5);
-            background-color: var(--primary-hover);
-        }
+        .cta-button:hover { background-color: var(--accent-hover); }
 
-        /* --- Products Section --- */
+        /* --- Products --- */
         .products-section {
-            padding: 80px 0;
-            background-color: var(--card-bg);
-            transition: background-color var(--transition-speed) ease;
+            padding: 72px 0 88px;
+            border-top: 1px solid var(--border);
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
-        }
-
-        .section-header.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .section-header { margin-bottom: 40px; }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
-        .section-subtitle {
-            color: var(--text-muted);
-            font-size: 1.1rem;
+        .section-subtitle { color: var(--text-muted); font-size: 1rem; }
+
+        .products-list {
+            border-top: 1px solid var(--border);
         }
 
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .product-card {
-            background-color: var(--bg-color);
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-color);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                        box-shadow 0.4s ease, border-color 0.4s ease, background-color var(--transition-speed) ease;
-            opacity: 0;
-            transform: translateY(30px);
-            cursor: pointer;
+        .product-row {
             display: flex;
-            flex-direction: column;
             align-items: center;
-        }
-
-        .product-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-blue);
+            gap: 18px;
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border);
         }
 
         .product-logo-wrapper {
-            width: 120px;
-            height: 120px;
-            margin-bottom: 24px;
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
         }
 
-        .product-logo {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-            transition: transform 0.4s ease;
-        }
-
-        .product-card:hover .product-logo {
-            transform: scale(1.1);
-        }
+        .product-logo { width: 100%; height: 100%; object-fit: contain; }
 
         .product-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-main);
+            font-size: 1.1rem;
+            font-weight: 600;
+            flex: 1;
         }
+
+        .product-row:hover .product-name { color: var(--accent); }
 
         /* --- Footer --- */
         footer {
-            padding: 40px 0;
+            padding: 32px 0;
             text-align: center;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--border);
             color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .footer-social {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 20px;
+            font-size: 0.85rem;
         }
 
         .footer-links {
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -418,182 +248,58 @@
             flex-wrap: wrap;
         }
 
-        .footer-links .link-sep {
-            color: var(--border-color);
-        }
+        .footer-links .link-sep { color: var(--border); }
 
-        .privacy-link {
-            color: var(--primary-blue);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
+        .privacy-link { color: var(--text-muted); font-weight: 500; }
+        .privacy-link:hover { color: var(--accent); }
 
-        .privacy-link:hover {
-            color: var(--primary-hover);
-            text-decoration: underline;
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 14px;
         }
 
         .social-link {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 14px;
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
+            gap: 6px;
             color: var(--text-muted);
-            font-size: 0.85rem;
             font-weight: 500;
-            transition: all var(--transition-speed) ease;
         }
 
-        .social-link:hover {
-            border-color: var(--primary-blue);
-            color: var(--primary-blue);
-            transform: translateY(-2px);
-        }
+        .social-link:hover { color: var(--accent); }
 
-        .social-link svg {
-            width: 15px;
-            height: 15px;
-            flex-shrink: 0;
-        }
+        .social-link svg { width: 14px; height: 14px; }
 
-        @media (max-width: 480px) {
-            .footer-social {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-
-        /* --- Animations --- */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* --- Reduced motion --- */
         @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.001ms !important;
-                transition-duration: 0.001ms !important;
-            }
+            * { transition-duration: 0.001ms !important; }
         }
 
-        /* --- Responsive Design: Tablets --- */
-        @media (max-width: 900px) {
-            .container { padding: 0 24px; }
-
-            .hero { padding-top: 140px; padding-bottom: 60px; }
-            .hero h1 { font-size: 2.75rem; }
-            .hero p { font-size: 1.1rem; }
-
-            .products-grid {
-                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-                gap: 24px;
-            }
-        }
-
+        /* --- Responsive --- */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.25rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .header-inner {
-                height: 68px;
-            }
-
-            nav {
-                gap: 10px;
-            }
-
-            .theme-toggle .theme-text {
-                display: none;
-            }
-
-            .theme-toggle {
-                padding: 8px;
-            }
-
-            .header-controls {
-                gap: 6px;
-            }
-
-            .products-section {
-                padding: 60px 0;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
+            .hero h1 { font-size: 2.1rem; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .header-inner { height: 64px; }
+            .theme-toggle .theme-text { display: none; }
+            .theme-toggle { padding: 8px; }
         }
 
-        /* --- Responsive Design: Phones --- */
         @media (max-width: 480px) {
-            .container { padding: 0 16px; }
-
-            .hero { padding-top: 120px; padding-bottom: 48px; }
-            .hero h1 { font-size: 1.85rem; margin-bottom: 14px; }
-            .hero p { font-size: 1rem; margin-bottom: 28px; }
-
-            .cta-button {
-                padding: 12px 26px;
-                font-size: 0.95rem;
-            }
-
-            .logo-container {
-                font-size: 1.2rem;
-                gap: 8px;
-            }
-
-            .logo-img {
-                height: 32px;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 18px;
-            }
-
-            .product-card {
-                padding: 32px 22px;
-            }
-
-            .product-logo-wrapper {
-                width: 96px;
-                height: 96px;
-                margin-bottom: 18px;
-            }
-
-            .section-title {
-                font-size: 1.6rem;
-            }
-
-            .section-subtitle {
-                font-size: 1rem;
-            }
-
-            .lang-toggle {
-                padding: 8px 8px;
-            }
+            .container { padding: 0 18px; }
+            .hero { padding-top: 116px; padding-bottom: 48px; }
+            .hero h1 { font-size: 1.7rem; }
+            .hero p { font-size: 1rem; }
+            .cta-button { padding: 11px 24px; font-size: 0.9rem; }
+            .logo-container { font-size: 1.05rem; }
+            .logo-img { height: 26px; }
+            .section-title { font-size: 1.35rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <div class="container header-inner">
             <a href="index.html" class="logo-container">
@@ -603,8 +309,9 @@
 
             <nav>
                 <ul class="nav-links">
-                    <li><a href="https://wiki.moolvylabs.org/" class="nav-link" data-i18n="nav_wiki">WIKI</a></li>
-                    <li><a href="https://news.moolvylabs.org/" class="nav-link" data-i18n="nav_news">NEWS</a></li>
+                    <li><a href="https://wiki.moolvylabs.org/" class="nav-link" data-i18n="nav_wiki">Wiki</a></li>
+                    <li><a href="https://news.moolvylabs.org/" class="nav-link" data-i18n="nav_news">News</a></li>
+                    <li><a href="https://maruf.moolvylabs.org/" class="nav-link" data-i18n="nav_blog">Blog</a></li>
                 </ul>
 
                 <div class="header-controls">
@@ -615,75 +322,73 @@
                     </button>
 
                     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" type="button">
-                        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                         <span class="theme-text" data-i18n="theme_label">Theme</span>
                     </button>
 
                     <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false" type="button">
-                        <svg class="icon-open" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                        <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        <svg class="icon-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                        <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
                 </div>
             </nav>
         </div>
 
         <div id="mobile-nav-panel" class="mobile-nav-panel">
-            <a href="https://wiki.moolvylabs.org/" class="nav-link" data-i18n="nav_wiki">WIKI</a>
-            <a href="https://news.moolvylabs.org/" class="nav-link" data-i18n="nav_news">NEWS</a>
+            <a href="https://wiki.moolvylabs.org/" class="nav-link" data-i18n="nav_wiki">Wiki</a>
+            <a href="https://news.moolvylabs.org/" class="nav-link" data-i18n="nav_news">News</a>
+            <a href="https://maruf.moolvylabs.org/" class="nav-link" data-i18n="nav_blog">Blog</a>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main>
-        <!-- Hero Section -->
         <section class="hero container">
             <h1 data-i18n="hero_title">Innovate with Moolvy</h1>
-            <p data-i18n="hero_subtitle">Building the future of digital solutions. Explore our ecosystem of powerful tools and services designed for modern creators.</p>
+            <p data-i18n="hero_subtitle">Building the future of digital solutions. Explore our ecosystem of tools and services designed for modern creators.</p>
             <a href="#products" class="cta-button" data-i18n="hero_cta">Explore Products</a>
         </section>
 
-        <!-- Products Section -->
         <section id="products" class="products-section">
             <div class="container">
-                <div class="section-header scroll-animate">
+                <div class="section-header">
                     <h2 class="section-title" data-i18n="products_title">Our Products &amp; Services</h2>
                     <p class="section-subtitle" data-i18n="products_subtitle">Discover what we've built for you</p>
                 </div>
 
-                <div class="products-grid">
-
-                    <!-- Product 1: Morphy AI -->
-                    <a href="#" class="product-card scroll-animate" style="transition-delay: 0.1s;">
+                <div class="products-list">
+                    <a href="#" class="product-row">
                         <div class="product-logo-wrapper">
                             <img src="product1-logo.png" alt="Morphy AI Logo" class="product-logo">
                         </div>
                         <h3 class="product-name" data-i18n="product1_name">Morphy AI</h3>
                     </a>
 
-                    <!-- Product 2: Qumen -->
-                    <a href="#" class="product-card scroll-animate" style="transition-delay: 0.2s;">
+                    <a href="#" class="product-row">
                         <div class="product-logo-wrapper">
                             <img src="product2-logo.png" alt="Qumen Logo" class="product-logo">
                         </div>
                         <h3 class="product-name" data-i18n="product2_name">Qumen</h3>
                     </a>
 
-                    <!-- Product 3: Morphy Studio -->
-                    <a href="#" class="product-card scroll-animate" style="transition-delay: 0.3s;">
+                    <a href="#" class="product-row">
                         <div class="product-logo-wrapper">
                             <img src="product3-logo.png" alt="Morphy Studio Logo" class="product-logo">
                         </div>
                         <h3 class="product-name" data-i18n="product3_name">Morphy Studio</h3>
                     </a>
-
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer>
+        <div class="container">
+            <div class="footer-social">
+                <a href="https://x.com/mamedarovmaruf" class="social-link" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-7-6.2 7H1l8.2-9.3L1 2h7l4.9 6.4L18.9 2z"/></svg>
+                    <span data-i18n="x_link">X (Twitter)</span>
+                </a>
             </div>
             <p data-i18n="footer_text">&copy; 2026 Moolvy Labs. All rights reserved.</p>
             <div class="footer-links">
@@ -694,7 +399,6 @@
         </div>
     </footer>
 
-    <!-- JavaScript Logic -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -730,11 +434,12 @@
 
             const translations = {
                 en: {
-                    nav_wiki: 'WIKI',
-                    nav_news: 'NEWS',
+                    nav_wiki: 'Wiki',
+                    nav_news: 'News',
+                    nav_blog: 'Blog',
                     theme_label: 'Theme',
                     hero_title: 'Innovate with Moolvy',
-                    hero_subtitle: 'Building the future of digital solutions. Explore our ecosystem of powerful tools and services designed for modern creators.',
+                    hero_subtitle: 'Building the future of digital solutions. Explore our ecosystem of tools and services designed for modern creators.',
                     hero_cta: 'Explore Products',
                     products_title: 'Our Products & Services',
                     products_subtitle: "Discover what we've built for you",
@@ -743,14 +448,16 @@
                     product3_name: 'Morphy Studio',
                     footer_text: '\u00A9 2026 Moolvy Labs. All rights reserved.',
                     privacy_link: 'Privacy Policy',
-                    terms_link: 'Terms of Service'
+                    terms_link: 'Terms of Service',
+                    x_link: 'X (Twitter)'
                 },
                 ru: {
-                    nav_wiki: 'ВИКИ',
-                    nav_news: 'НОВОСТИ',
+                    nav_wiki: 'Вики',
+                    nav_news: 'Новости',
+                    nav_blog: 'Блог',
                     theme_label: 'Тема',
                     hero_title: 'Инновации вместе с Moolvy',
-                    hero_subtitle: 'Создаём будущее цифровых решений. Ознакомьтесь с нашей экосистемой мощных инструментов и сервисов для современных создателей.',
+                    hero_subtitle: 'Создаём будущее цифровых решений. Ознакомьтесь с нашей экосистемой инструментов и сервисов для современных создателей.',
                     hero_cta: 'Смотреть продукты',
                     products_title: 'Наши продукты и сервисы',
                     products_subtitle: 'Узнайте, что мы для вас создали',
@@ -759,7 +466,8 @@
                     product3_name: 'Morphy Studio',
                     footer_text: '\u00A9 2026 Moolvy Labs. Все права защищены.',
                     privacy_link: 'Политика конфиденциальности',
-                    terms_link: 'Пользовательское соглашение'
+                    terms_link: 'Пользовательское соглашение',
+                    x_link: 'X (Twitter)'
                 }
             };
 
@@ -790,7 +498,6 @@
                 savedLang = localStorage.getItem('lang');
             } catch (e) { /* ignore */ }
 
-            // English is always the default on first load, regardless of browser locale.
             const initialLang = (savedLang === 'en' || savedLang === 'ru') ? savedLang : 'en';
             applyLanguage(initialLang);
 
@@ -821,23 +528,6 @@
                     mobileMenuBtn.setAttribute('aria-label', 'Open menu');
                 });
             });
-
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        obs.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
         });
     </script>
 </body>
