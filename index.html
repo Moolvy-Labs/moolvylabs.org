@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moolvy Labs</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Theme tokens --- */
+        :root {
+            --bg: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #111111;
+            --text-muted: #6b6b6b;
+            --accent: #3454d1;
+            --accent-hover: #2942a8;
+            --border: #e6e6e6;
+            --speed: 0.2s;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0b0b0f;
+            --header-bg: rgba(11, 11, 15, 0.85);
+            --text-main: #f2f2f2;
+            --text-muted: #969696;
+            --accent: #6f8bf0;
+            --accent-hover: #8ea0f4;
+            --border: #262630;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { -webkit-text-size-adjust: 100%; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background-color var(--speed) ease, color var(--speed) ease;
+        }
+
+        a { text-decoration: none; color: inherit; transition: color var(--speed) ease; }
+        ul { list-style: none; }
+        img, svg { max-width: 100%; display: block; }
+
+        .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 1000;
+            background-color: var(--header-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 1.15rem;
+        }
+
+        .logo-img { height: 30px; width: auto; object-fit: contain; }
+
+        nav { display: flex; align-items: center; gap: 28px; }
+        .nav-links { display: flex; gap: 28px; }
+
+        .nav-link {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .nav-link:hover { color: var(--text-main); }
+
+        .header-controls { display: flex; align-items: center; gap: 8px; }
+
+        .theme-toggle, .lang-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 7px 11px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: inherit;
+            transition: border-color var(--speed) ease, color var(--speed) ease;
+        }
+
+        .theme-toggle:hover, .lang-toggle:hover { border-color: var(--text-muted); }
+
+        .theme-toggle .icon-moon { display: none; }
+        [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+        [data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+
+        .lang-toggle { gap: 3px; padding: 7px 9px; }
+        .lang-toggle .lang-option { padding: 1px 5px; border-radius: 4px; color: var(--text-muted); }
+        .lang-toggle .lang-option.active { color: var(--bg); background-color: var(--text-main); }
+        .lang-toggle .lang-sep { color: var(--border); }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-main);
+            padding: 6px;
+            line-height: 0;
+        }
+
+        .mobile-menu-btn .icon-close { display: none; }
+        .mobile-menu-btn.open .icon-open { display: none; }
+        .mobile-menu-btn.open .icon-close { display: block; }
+
+        .mobile-nav-panel {
+            display: none;
+            flex-direction: column;
+            padding: 4px 24px 16px;
+            border-top: 1px solid var(--border);
+            background-color: var(--bg);
+        }
+
+        .mobile-nav-panel.open { display: flex; }
+
+        .mobile-nav-panel .nav-link {
+            padding: 14px 2px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mobile-nav-panel .nav-link:last-child { border-bottom: none; }
+
+        /* --- Hero --- */
+        .hero {
+            padding-top: 148px;
+            padding-bottom: 72px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 18px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin: 0 auto 36px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background-color var(--speed) ease;
+        }
+
+        .cta-button:hover { background-color: var(--accent-hover); }
+
+        /* --- Products --- */
+        .products-section {
+            padding: 72px 0 88px;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-header { margin-bottom: 40px; }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle { color: var(--text-muted); font-size: 1rem; }
+
+        .products-list {
+            border-top: 1px solid var(--border);
+        }
+
+        .product-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .product-logo-wrapper {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-logo { width: 100%; height: 100%; object-fit: contain; }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .product-row:hover .product-name { color: var(--accent); }
+
+        /* --- Footer --- */
+        footer {
+            padding: 32px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-links {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links .link-sep { color: var(--border); }
+
+        .privacy-link { color: var(--text-muted); font-weight: 500; }
+        .privacy-link:hover { color: var(--accent); }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .social-link:hover { color: var(--accent); }
+
+        .social-link svg { width: 14px; height: 14px; }
+
+        /* --- Reduced motion --- */
+        @media (prefers-reduced-motion: reduce) {
+            * { transition-duration: 0.001ms !important; }
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.1rem; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .header-inner { height: 64px; }
+            .theme-toggle .theme-text { display: none; }
+            .theme-toggle { padding: 8px; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 0 18px; }
+            .hero { padding-top: 116px; padding-bottom: 48px; }
+            .hero h1 { font-size: 1.7rem; }
+            .hero p { font-size: 1rem; }
+            .cta-button { padding: 11px 24px; font-size: 0.9rem; }
+            .logo-container { font-size: 1.05rem; }
+            .logo-img { height: 26px; }
+            .section-title { font-size: 1.35rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo-container">
+                <img src="moolvy.png" alt="Moolvy Labs Logo" class="logo-img">
+                <span>Moolvy Labs</span>
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="https://wiki.moolvylabs.org/" class="nav-link" data-i18n="nav_wiki">Wiki</a></li>
+                    <li><a href="https://news.moolvylabs.org/" class="nav-link" data-i18n="nav_news">News</a></li>
+                    <li><a href="https://maruf.moolvylabs.org/" class="nav-link" data-i18n="nav_blog">Blog</a></li>
+                </ul>
+
+                <div class="header-controls">
+                    <button id="lang-toggle" class="lang-toggle" aria-label="Switch language" type="button">
+                        <span class="lang-option" data-lang-option="en">EN</span>
+                        <span class="lang-sep">/</span>
+                        <span class="lang-option" data-lang-option="ru">RU</span>
+                    </button>
+
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" type="button">
+                        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                        <span class="theme-text" data-i18n="theme_label">Theme</span>
+                    </button>
+
+                    <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false" type="button">
+                        <svg class="icon-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                        <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <div id="mobile-nav-panel" class="mobile-nav-panel">
+            <a href="https://wiki.moolvylabs.org/" class="nav-link" data-i18n="nav_wiki">Wiki</a>
+            <a href="https://news.moolvylabs.org/" class="nav-link" data-i18n="nav_news">News</a>
+            <a href="https://maruf.moolvylabs.org/" class="nav-link" data-i18n="nav_blog">Blog</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero container">
+            <h1 data-i18n="hero_title">Innovate with Moolvy</h1>
+            <p data-i18n="hero_subtitle">Building the future of digital solutions. Explore our ecosystem of tools and services designed for modern creators.</p>
+            <a href="#products" class="cta-button" data-i18n="hero_cta">Explore Products</a>
+        </section>
+
+        <section id="products" class="products-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title" data-i18n="products_title">Our Products &amp; Services</h2>
+                    <p class="section-subtitle" data-i18n="products_subtitle">Discover what we've built for you</p>
+                </div>
+
+                <div class="products-list">
+                    <a href="#" class="product-row">
+                        <div class="product-logo-wrapper">
+                            <img src="product1-logo.png" alt="Morphy AI Logo" class="product-logo">
+                        </div>
+                        <h3 class="product-name" data-i18n="product1_name">Morphy AI</h3>
+                    </a>
+
+                    <a href="#" class="product-row">
+                        <div class="product-logo-wrapper">
+                            <img src="product2-logo.png" alt="Qumen Logo" class="product-logo">
+                        </div>
+                        <h3 class="product-name" data-i18n="product2_name">Qumen</h3>
+                    </a>
+
+                    <a href="#" class="product-row">
+                        <div class="product-logo-wrapper">
+                            <img src="product3-logo.png" alt="Morphy Studio Logo" class="product-logo">
+                        </div>
+                        <h3 class="product-name" data-i18n="product3_name">Morphy Studio</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-social">
+                <a href="https://x.com/mamedarovmaruf" class="social-link" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-7-6.2 7H1l8.2-9.3L1 2h7l4.9 6.4L18.9 2z"/></svg>
+                    <span data-i18n="x_link">X (Twitter)</span>
+                </a>
+            </div>
+            <p data-i18n="footer_text">&copy; 2026 Moolvy Labs. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="privacy.html" class="privacy-link" data-i18n="privacy_link">Privacy Policy</a>
+                <span class="link-sep">&middot;</span>
+                <a href="terms.html" class="privacy-link" data-i18n="terms_link">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const body = document.body;
+            const htmlEl = document.documentElement;
+            const themeToggleBtn = document.getElementById('theme-toggle');
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    body.setAttribute('data-theme', 'dark');
+                } else {
+                    body.removeAttribute('data-theme');
+                }
+            }
+
+            let savedTheme = null;
+            try {
+                savedTheme = localStorage.getItem('theme');
+            } catch (e) {
+                /* localStorage unavailable — fall back to system preference */
+            }
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(savedTheme || (systemPrefersDark ? 'dark' : 'light'));
+
+            themeToggleBtn.addEventListener('click', () => {
+                const isDark = body.getAttribute('data-theme') === 'dark';
+                const nextTheme = isDark ? 'light' : 'dark';
+                applyTheme(nextTheme);
+                try {
+                    localStorage.setItem('theme', nextTheme);
+                } catch (e) { /* ignore */ }
+            });
+
+            const translations = {
+                en: {
+                    nav_wiki: 'Wiki',
+                    nav_news: 'News',
+                    nav_blog: 'Blog',
+                    theme_label: 'Theme',
+                    hero_title: 'Innovate with Moolvy',
+                    hero_subtitle: 'Building the future of digital solutions. Explore our ecosystem of tools and services designed for modern creators.',
+                    hero_cta: 'Explore Products',
+                    products_title: 'Our Products & Services',
+                    products_subtitle: "Discover what we've built for you",
+                    product1_name: 'Morphy AI',
+                    product2_name: 'Qumen',
+                    product3_name: 'Morphy Studio',
+                    footer_text: '\u00A9 2026 Moolvy Labs. All rights reserved.',
+                    privacy_link: 'Privacy Policy',
+                    terms_link: 'Terms of Service',
+                    x_link: 'X (Twitter)'
+                },
+                ru: {
+                    nav_wiki: 'Вики',
+                    nav_news: 'Новости',
+                    nav_blog: 'Блог',
+                    theme_label: 'Тема',
+                    hero_title: 'Инновации вместе с Moolvy',
+                    hero_subtitle: 'Создаём будущее цифровых решений. Ознакомьтесь с нашей экосистемой инструментов и сервисов для современных создателей.',
+                    hero_cta: 'Смотреть продукты',
+                    products_title: 'Наши продукты и сервисы',
+                    products_subtitle: 'Узнайте, что мы для вас создали',
+                    product1_name: 'Morphy AI',
+                    product2_name: 'Qumen',
+                    product3_name: 'Morphy Studio',
+                    footer_text: '\u00A9 2026 Moolvy Labs. Все права защищены.',
+                    privacy_link: 'Политика конфиденциальности',
+                    terms_link: 'Пользовательское соглашение',
+                    x_link: 'X (Twitter)'
+                }
+            };
+
+            const langToggleBtn = document.getElementById('lang-toggle');
+            const langOptions = langToggleBtn.querySelectorAll('.lang-option');
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+
+            function applyLanguage(lang) {
+                const dict = translations[lang] || translations.en;
+
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key] !== undefined) {
+                        el.textContent = dict[key];
+                    }
+                });
+
+                langOptions.forEach(opt => {
+                    opt.classList.toggle('active', opt.getAttribute('data-lang-option') === lang);
+                });
+
+                htmlEl.setAttribute('lang', lang);
+                langToggleBtn.setAttribute('aria-label', lang === 'en' ? 'Switch to Russian' : 'Переключить на английский');
+            }
+
+            let savedLang = null;
+            try {
+                savedLang = localStorage.getItem('lang');
+            } catch (e) { /* ignore */ }
+
+            const initialLang = (savedLang === 'en' || savedLang === 'ru') ? savedLang : 'en';
+            applyLanguage(initialLang);
+
+            langToggleBtn.addEventListener('click', () => {
+                const currentLang = htmlEl.getAttribute('lang') === 'ru' ? 'ru' : 'en';
+                const nextLang = currentLang === 'en' ? 'ru' : 'en';
+                applyLanguage(nextLang);
+                try {
+                    localStorage.setItem('lang', nextLang);
+                } catch (e) { /* ignore */ }
+            });
+
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileNavPanel = document.getElementById('mobile-nav-panel');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = mobileNavPanel.classList.toggle('open');
+                mobileMenuBtn.classList.toggle('open', isOpen);
+                mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+                mobileMenuBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+            });
+
+            mobileNavPanel.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNavPanel.classList.remove('open');
+                    mobileMenuBtn.classList.remove('open');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    mobileMenuBtn.setAttribute('aria-label', 'Open menu');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
